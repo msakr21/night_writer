@@ -5,16 +5,20 @@ class TerminalIO
     @output = nil
   end
 
-  def self.night_writer(input, output)
-
+  def self.night_writer   #(input, output)
+    terminal_i_o = new
+    ARGV == ["message.txt", "braille.txt"]
+    set_input_and_output(ARGV[0], ARGV[1] terminal_i_o)
+    terminal_message(ARGV[1], terminal_i_o.)
   end
-  ARGV == ["message.txt", "braille.txt"]
 
-  message = File.read(ARGV[0])
+  def self.set_input_and_output(input, output, terminal_i_o)
+   terminal_i_o.message = File.read(input)
+   terminal_i_o.output = File.new(output, 'w')
+  end
 
-
-  output = File.new(ARGV[1], 'w')
-  output.puts(message.upcase)
-  puts "Created '#{ARGV[1]}' containing #{message.length} characters"
-
+  def self.terminal_message(file_name, terminal_i_o)
+    terminal_i_o.output.puts(terminal_i_o.message.upcase)
+    puts "Created '#{file_name}' containing #{terminal_i_o.message.length} characters"
+  end
 end
