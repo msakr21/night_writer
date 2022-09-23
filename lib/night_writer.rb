@@ -1,5 +1,5 @@
-require 'terminal_i_o'
+require './lib/terminal_i_o'
 
-TerminalIO.new.night_writer("message.txt", "braille.txt")
+TerminalIO.night_writer
 
 
