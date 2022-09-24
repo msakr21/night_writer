@@ -27,6 +27,19 @@ RSpec.describe Dictionary do
     expect(dictionary.alphabet[25]).to eq("z")
   end
 
+  it "5. has a method that determines what the first row of a braille character should have for a letter of the alphabet" do
+    expect(dictionary.row_1_input("a")).to eq("O.\n")
+  end
+
+  it "6. has a method that determines what the second row of a braille character should have for a letter of the alphabet" do
+    expect(dictionary.row_2_input("a")).to eq("..\n")
+  end
+
+  it "7. has a method that determines what the third row of a braille character should have for a letter of the alphabet" do
+    expect(dictionary.row_3_input("a")).to eq("..\n")
+  end
+
+
   it "8. has a method that adds all of the alphabet letters and their corresponding braille characters into the braille characters container" do
     dictionary.fill_braille_characters
     expect(dictionary.braille_characters.keys.length).to eq(26)
