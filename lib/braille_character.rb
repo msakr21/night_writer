@@ -10,7 +10,7 @@ class BrailleCharacter
     @row_2 = row_2
     @row_3 = row_3
     @upper_case = false
-    @capital_grid = "..\n..\n.O\n"
+    @capital_grid = "..\n..\n.0\n"
     @combined_grid = row_1 + row_2 + row_3
   end
 

@@ -13,10 +13,10 @@ class Translator
 
   def initialize
     @check_condition = "abcdefghijklmnopqrstuvwxyz".upcase
-    @dictionary = Dictionary.fill_braille_characters
+    @dictionary = Dictionary.load_dictionary
     @uppercase_row_1 = ".."
     @uppercase_row_2 = ".."
-    @uppercase_row_3 = ".O"
+    @uppercase_row_3 = ".0"
     @output_row_1 = ""
     @output_row_2 = ""
     @output_row_3 = ""
