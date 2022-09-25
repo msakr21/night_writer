@@ -44,10 +44,10 @@ RSpec.describe TerminalIO do
   end
 
   xit "6. generates English output to a file from braille input" do
-    allow(terminal_i_o).to receive(:output_file_name).and_return("braille.txt")
-    allow(terminal_i_o).to receive(:message).and_return("Bla")
+    allow(terminal_i_o).to receive(:output_file_name).and_return("english.txt")
+    allow(terminal_i_o).to receive(:message).and_return("..0.0.0.\n..0.0...\n.0..0...\n")
 
     terminal_i_o.generate_english_output
-    expect(terminal_i_o.terminal_message).to eq(puts "Created 'braille.txt' containing 3 characters")
+    expect(File.read("english.txt")).to eq("Bla")
   end
 end
