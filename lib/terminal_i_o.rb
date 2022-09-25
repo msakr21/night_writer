@@ -19,7 +19,7 @@ class TerminalIO
 
   def generate_output
     output = File.new(output_file_name, 'w+')
-    output_content = translator.to_braille(message)
+    output_content = translator.to_braille_sentence(message)
     output.puts(output_content)
     output.close
   end
