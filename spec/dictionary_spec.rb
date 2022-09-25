@@ -14,7 +14,7 @@ RSpec.describe Dictionary do
   end
 
   it "3. has a method to add braille characters to the hash" do
-    dictionary.add_character("a", "O.\n", "..\n", "..\n")
+    dictionary.add_character("a", "0.\n", "..\n", "..\n")
     expect(dictionary.braille_characters["a"]).to be_a(BrailleCharacter)
     expect(dictionary.braille_characters["a"].combined_grid).to eq("O.\n..\n..\n")
   end
@@ -41,11 +41,11 @@ RSpec.describe Dictionary do
 
 
   it "8. has a method that adds all of the alphabet letters and their corresponding braille characters into the braille characters container" do
-    dictionary.fill_braille_characters
-    expect(dictionary.braille_characters.keys.length).to eq(26)
-    expect(dictionary.braille_characters.keys).to eq("abcdefghijklmnopqrstuvwxyz".split(//))
-    expect(dictionary.braille_characters["a"]).to be_a(BrailleCharacter)
-    expect(dictionary.braille_characters["a"].combined_grid).to eq("O.\n..\n..\n")
-    expect(dictionary.braille_characters["q"].combined_grid).to eq("OO\nOO\nO.\n")
+    dictionary_1 = Dictionary.fill_braille_characters
+    expect(dictionary_1.braille_characters.keys.length).to eq(26)
+    expect(dictionary_1.braille_characters.keys).to eq("abcdefghijklmnopqrstuvwxyz".split(//))
+    expect(dictionary_1.braille_characters["a"]).to be_a(BrailleCharacter)
+    expect(dictionary_1.braille_characters["a"].combined_grid).to eq("0.\n..\n..\n")
+    expect(dictionary_1.braille_characters["q"].combined_grid).to eq("00\n00\n0.\n")
   end
 end

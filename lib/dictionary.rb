@@ -22,11 +22,11 @@ class Dictionary
 
   def row_1_input(character)
     if @row_1[:group_1].include?(character)
-      "O.\n"
+      "0.\n"
     elsif @row_1[:group_2].include?(character)
-      "OO\n"
+      "00\n"
     elsif @row_1[:group_3].include?(character)
-      ".O\n"
+      ".0\n"
     end
   end
 
@@ -34,11 +34,11 @@ class Dictionary
     if @row_2[:group_1].include?(character)
       "..\n"
     elsif @row_2[:group_2].include?(character)
-      "O.\n"
+      "0.\n"
     elsif @row_2[:group_3].include?(character)
-      ".O\n"
+      ".0\n"
     elsif @row_2[:group_4].include?(character)
-      "OO\n"
+      "00\n"
     end
   end
 
@@ -46,11 +46,11 @@ class Dictionary
     if @row_3[:group_1].include?(character)
       "..\n"
     elsif @row_3[:group_2].include?(character)
-      "O.\n"
+      "0.\n"
     elsif @row_3[:group_3].include?(character)
-      "OO\n"
+      "00\n"
     elsif @row_3[:group_4].include?(character)
-      ".O\n"
+      ".0\n"
     end
   end
 
@@ -58,5 +58,16 @@ class Dictionary
     alphabet.each do |character|
       add_character(character, row_1_input(character), row_2_input(character), row_3_input(character))
     end
+  end
+
+  def add_space
+    add_character(" ", "..\n", "..\n", "..\n")
+  end
+
+  def self.load_dictionary
+    dictionary = new
+    dictionary.fill_braille_characters
+    dictionary.add_space
+    dictionary
   end
 end
