@@ -54,9 +54,11 @@ class Dictionary
     end
   end
 
-  def fill_braille_characters
-    alphabet.each do |character|
-      add_character(character, row_1_input(character), row_2_input(character), row_3_input(character))
+  def self.fill_braille_characters
+    dictionary = new
+    dictionary.alphabet.each do |character|
+      dictionary.add_character(character, dictionary.row_1_input(character), dictionary.row_2_input(character), dictionary.row_3_input(character))
     end
+    dictionary
   end
 end

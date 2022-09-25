@@ -28,5 +28,6 @@ RSpec.describe Translator do
 
   it "5. converts letters to their braille equivalent" do
     expect(translator.to_braille("a")).to eq("O.\n..\n..\n")
+    expect(translator.to_braille("A")).to eq("..O.\n....\n.O..\n")
   end
 end
