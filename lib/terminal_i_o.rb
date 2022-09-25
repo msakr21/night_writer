@@ -1,12 +1,14 @@
 class TerminalIO
   attr_reader :message,
               :file_name,
-              :output_file_name
+              :output_file_name,
+              :translator
 
   def initialize
     @file_name = ARGV[0]
     @message = File.read(file_name)
     @output_file_name = ARGV[1]
+    @translator = Translator.new
   end
 
   def self.night_writer
@@ -17,7 +19,8 @@ class TerminalIO
 
   def generate_output
     output = File.new(output_file_name, 'w+')
-    output.puts(message)
+    output_content = translator.to_braille(message)
+    output.puts(output_content)
     output.close
   end
 

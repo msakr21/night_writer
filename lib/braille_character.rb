@@ -2,7 +2,6 @@ class BrailleCharacter
   attr_reader :row_1,
               :row_2,
               :row_3,
-              :upper_case,
               :capital_grid,
               :combined_grid
 
@@ -15,11 +14,4 @@ class BrailleCharacter
     @combined_grid = row_1 + row_2 + row_3
   end
 
-  def is_upper_case?
-    @upper_case
-  end
-
-  def toggle_upper_case
-    @upper_case = !@upper_case
-  end
 end

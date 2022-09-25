@@ -14,25 +14,11 @@ RSpec.describe BrailleCharacter do
     expect(a.row_3).to eq("..\n")
   end
 
-  it "3. has an attribute 'upper case' that defaults to false" do
-    expect(a.upper_case).to eq(false)
-  end
-
-  it "4. has a method 'is_upper_case?' that checks if the braille chracter us upper case or not" do
-    expect(a.is_upper_case?).to eq(false)
-  end
-
-  it "5. has a method 'toggle_upper_case' that toggles the upper_case attribute" do
-    a.toggle_upper_case
-    expect(a.is_upper_case?).to eq(true)
-    expect(a.upper_case).to eq(true)
-  end
-
-  it "6. has a grid for upper case letter" do
+  it "3. has a grid for upper case letter" do
     expect(a.capital_grid).to eq("..\n..\n.O\n")
   end
 
-  it "7. has a combined grid readable attribute" do
+  it "4. has a combined grid readable attribute" do
     expect(a.combined_grid).to eq("O.\n..\n..\n")
   end
   
