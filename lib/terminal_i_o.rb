@@ -14,15 +14,14 @@ class TerminalIO
   end
 
   def self.night_writer
+    # require 'pry';binding.pry
     terminal_i_o = new
     terminal_i_o.generate_braille_output
-    terminal_i_o.terminal_message
   end
 
   def self.night_reader
     terminal_i_o = new
     terminal_i_o.generate_english_output
-    terminal_i_o.terminal_message
   end
 
   def generate_english_output
@@ -30,6 +29,7 @@ class TerminalIO
     output_content = reverse_translator.to_english(message)
     output.puts(output_content)
     output.close
+    terminal_message(output_content)
   end
 
 
@@ -39,9 +39,10 @@ class TerminalIO
     output_content = translator.to_braille_sentence(message)
     output.puts(output_content)
     output.close
+    terminal_message(message)
   end
 
-  def terminal_message
-    puts "Created '#{output_file_name}' containing #{message.length} characters"
+  def terminal_message(file_content)
+    puts "Created '#{output_file_name}' containing #{file_content.delete("\n").length} characters"
   end
 end
