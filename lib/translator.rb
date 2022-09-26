@@ -65,7 +65,7 @@ class Translator
 
   def to_braille_sentence(input)
     input.split(//).each do |character|
-      to_braille(character)
+      to_braille(character) if character != "\n"
       if output_row_3.length == 80
         update_output
         reset_output_rows

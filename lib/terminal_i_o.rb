@@ -43,6 +43,6 @@ class TerminalIO
   end
 
   def terminal_message(file_content)
-    puts "Created '#{output_file_name}' containing #{file_content.length} characters"
+    puts "Created '#{output_file_name}' containing #{file_content.delete("\n").length} characters"
   end
 end
