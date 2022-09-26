@@ -10,7 +10,7 @@ class ReverseTranslator < Translator
     @input_row_1 = ""
     @input_row_2 = ""
     @input_row_3 = ""
-    @collector = []
+    @collector = Hash.new(0)
     super
   end
 
@@ -20,12 +20,50 @@ class ReverseTranslator < Translator
     end
   end
 
-  def to_english_sentence(input)
+  def collect_braille_rows(input)
+    i = 1
     input.split.each do |row|
-      @collector << row.split(/(..)/)
-      #.delete("")
-      #@collector = Hash.new(0)
-      #collect, set row1 row2 and row3 to whatever the rows are going to be, one at a time then combine then iterate and compare to combined grid to find key.
-      #will need to set up child class of translator with input_rows rather than output_rows, final output can just add regular characters
+      @collector["#{i}"] = row.split(/(..)/)
+      @collector["#{i}"].delete("")
+      i += 1
+    end
+  end
+
+  def input_row_update(row_input, character_input)
+    # require 'pry';binding.pry
+      input_row_1 = collector.values[row_input][character_input] + "\n"
+      input_row_2 = collector.values[(row_input + 1)][character_input] + "\n"
+      input_row_3 = collector.values[(row_input + 2)][character_input] + "\n"
+      (input_row_1 + input_row_2 + input_row_3)
+  end
+
+  def single_braille_conversion(row_input, character_input)
+    # require 'pry';binding.pry
+      @final_output += braille_lookup[input_row_update(row_input, character_input)]
+  end
+
+  def conversion_loop(row_input, character_input)
+    until row_input >= collector.values.length do
+      # require 'pry';binding.pry
+      single_braille_conversion(row_input, character_input)
+      character_input += 1
+      if character_input >= 40 or character_input == collector.values[row_input].length
+        row_input += 3
+        character_input = 0
+      end
+    end
+  end
+
+  def multi_braille_conversion
+    character_input_counter = 0
+    row_input_counter = 0
+    conversion_loop(row_input_counter, character_input_counter)
+  end
+
+  def to_english(input)
+    fill_lookup
+    collect_braille_rows(input)
+    multi_braille_conversion
+    final_output
   end
 end
