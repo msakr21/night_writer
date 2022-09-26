@@ -1,16 +1,18 @@
 class ReverseTranslator < Translator
   attr_reader :braille_lookup,
-              :input_row_1,
-              :input_row_2,
-              :input_row_3,
-              :collector
+              # :input_row_1,
+              # :input_row_2,
+              # :input_row_3,
+              :collector,
+              :uppercase
 
   def initialize
     @braille_lookup = Hash.new(0)
-    @input_row_1 = ""
-    @input_row_2 = ""
-    @input_row_3 = ""
+    # @input_row_1 = ""
+    # @input_row_2 = ""
+    # @input_row_3 = ""
     @collector = Hash.new(0)
+    @uppercase = false
     super
   end
 
@@ -30,23 +32,46 @@ class ReverseTranslator < Translator
   end
 
   def input_row_update(row_input, character_input)
-    # require 'pry';binding.pry
-      input_row_1 = collector.values[row_input][character_input] + "\n"
-      input_row_2 = collector.values[(row_input + 1)][character_input] + "\n"
-      input_row_3 = collector.values[(row_input + 2)][character_input] + "\n"
-      (input_row_1 + input_row_2 + input_row_3)
+      row_1 = collector.values[row_input][character_input] + "\n"
+      row_2 = collector.values[(row_input + 1)][character_input] + "\n"
+      row_3 = collector.values[(row_input + 2)][character_input] + "\n"
+      (row_1 + row_2 + row_3)
   end
 
+  def reverse_is_uppercase?(row_input, character_input)
+    input_row_update(row_input, character_input) == "..\n..\n.0\n"
+  end
+
+  
+
+  def toggle_uppercase
+    @uppercase = !uppercase
+  end
+
+
   def single_braille_conversion(row_input, character_input)
-    # require 'pry';binding.pry
       @final_output += braille_lookup[input_row_update(row_input, character_input)]
+  end
+
+  def uppercase_braille_conversion(row_input, character_input)
+    @final_output += braille_lookup[input_row_update(row_input, character_input)].upcase
+  end
+
+  def uppercase_conversion_logic(row_input, character_input)
+    if reverse_is_uppercase?(row_input, character_input) == false && uppercase == true
+      uppercase_braille_conversion(row_input, character_input)
+      toggle_uppercase
+    elsif reverse_is_uppercase?(row_input, character_input)
+      toggle_uppercase
+    else
+      single_braille_conversion(row_input, character_input)
+    end
   end
 
   def conversion_loop(row_input, character_input)
     until row_input >= collector.values.length do
-      single_braille_conversion(row_input, character_input)
+      uppercase_conversion_logic(row_input, character_input)
       character_input += 1
-      # require 'pry';binding.pry
       if character_input >= 40 or character_input == collector.values[row_input].length
         row_input += 3
         character_input = 0

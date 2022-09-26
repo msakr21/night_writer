@@ -16,7 +16,7 @@ RSpec.describe Translator do
     expect(reverse_translator.final_output).to eq("")
   end
 
-  it "3. has attributes 'input_row_1', 'input_row_2', and 'input_row_1' that are blank strings by default" do
+  xit "3. has attributes 'input_row_1', 'input_row_2', and 'input_row_1' that are blank strings by default" do
     expect(reverse_translator.input_row_1).to eq("")
     expect(reverse_translator.input_row_2).to eq("")
     expect(reverse_translator.input_row_3).to eq("")
@@ -38,7 +38,7 @@ RSpec.describe Translator do
   it "6. converts braille to their letter equivalent" do
     expect(reverse_translator.to_english("0.\n..\n..\n")).to eq("a")
     expect(reverse_translator.to_english("0.0.0000\n..0....0\n........\n")).to eq("abcd")
-    # expect(reverse_translator.to_english("..0.\n....\n.0..\n")).to eq("A")
+    expect(reverse_translator.to_english("..0...0.\n......0.\n.0...0..\n")).to eq("AB")
   end
 
 end
