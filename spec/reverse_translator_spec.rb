@@ -37,6 +37,7 @@ RSpec.describe Translator do
 
   it "6. converts braille to their letter equivalent" do
     expect(reverse_translator.to_english("0.\n..\n..\n")).to eq("a")
+    expect(reverse_translator.to_english("0.0.0000\n..0....0\n........\n")).to eq("abcd")
     # expect(reverse_translator.to_english("..0.\n....\n.0..\n")).to eq("A")
   end
 

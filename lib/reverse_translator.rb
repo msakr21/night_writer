@@ -44,9 +44,9 @@ class ReverseTranslator < Translator
 
   def conversion_loop(row_input, character_input)
     until row_input >= collector.values.length do
-      # require 'pry';binding.pry
       single_braille_conversion(row_input, character_input)
       character_input += 1
+      # require 'pry';binding.pry
       if character_input >= 40 or character_input == collector.values[row_input].length
         row_input += 3
         character_input = 0
@@ -60,7 +60,12 @@ class ReverseTranslator < Translator
     conversion_loop(row_input_counter, character_input_counter)
   end
 
+  def final_output_reset
+    @final_output = ""
+  end
+
   def to_english(input)
+    final_output_reset
     fill_lookup
     collect_braille_rows(input)
     multi_braille_conversion
