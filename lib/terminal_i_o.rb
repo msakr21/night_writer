@@ -2,13 +2,15 @@ class TerminalIO
   attr_reader :message,
               :file_name,
               :output_file_name,
-              :translator
+              :translator,
+              :reverse_translator
 
   def initialize
     @file_name = ARGV[0]
     @message = File.read(file_name)
     @output_file_name = ARGV[1]
     @translator = Translator.new
+    @reverse_translator = ReverseTranslator.new
   end
 
   def self.night_writer
@@ -25,7 +27,7 @@ class TerminalIO
 
   def generate_english_output
     output = File.new(output_file_name, 'w+')
-    output_content = translator.to_english_sentence(message)
+    output_content = reverse_translator.to_english(message)
     output.puts(output_content)
     output.close
   end
