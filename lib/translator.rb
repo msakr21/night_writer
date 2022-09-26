@@ -1,8 +1,6 @@
 class Translator
-  attr_reader :upper_case,
-              :check_uppercase,
+  attr_reader :check_uppercase,
               :dictionary,
-              :capital_grid,
               :uppercase_row_1,
               :uppercase_row_2,
               :uppercase_row_3,
@@ -10,22 +8,36 @@ class Translator
               :output_row_1,
               :output_row_2,
               :output_row_3
+              :number_row_1,
+              :number_row_2,
+              :number_row_3
 
   def initialize
     @check_uppercase = "abcdefghijklmnopqrstuvwxyz".upcase
-    @check_number_condition = "0123456789"
+    @check_numbers = "0123456789"
     @dictionary = Dictionary.load_dictionary
     @uppercase_row_1 = ".."
     @uppercase_row_2 = ".."
     @uppercase_row_3 = ".0"
+    @number_row_1 = ".0"
+    @number_row_2 = ".0"
+    @number_row_3 = "00"
     @output_row_1 = ""
     @output_row_2 = ""
     @output_row_3 = ""
     @final_output = ""
   end
 
-  def is_upper_case?(input)
+  def is_uppercase?(input)
     if check_uppercase.include?(input)
+      true
+    else
+      false
+    end
+  end
+
+  def is_number?(input)
+    if check_numbers.include?(input)
       true
     else
       false
@@ -46,10 +58,18 @@ class Translator
     @output_row_3 += dictionary.braille_characters[input].row_3.chomp
   end
 
+  def number_braille(input)
+    @output_row_1 += (number_row_1 + dictionary.braille_characters[input].row_1.chomp)
+    @output_row_2 += (number_row_2 + dictionary.braille_characters[input].row_2.chomp)
+    @output_row_3 += (number_row_3 + dictionary.braille_characters[input].row_3.chomp)
+  end
+
   def to_braille(input)
-      if is_upper_case?(input)
+      if is_uppercase?(input)
         upper_case_braille(input)
-      elsif is_upper_case?(input) == false && input.class == String
+      elsif is_number?(input)
+        number_braille(input)
+      else
         regular_braille(input)
       end
   end
