@@ -42,8 +42,6 @@ class ReverseTranslator < Translator
     input_row_update(row_input, character_input) == "..\n..\n.0\n"
   end
 
-  
-
   def toggle_uppercase
     @uppercase = !uppercase
   end
