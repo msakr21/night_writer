@@ -1,6 +1,6 @@
 class Translator
   attr_reader :upper_case,
-              :check_condition,
+              :check_uppercase,
               :dictionary,
               :capital_grid,
               :uppercase_row_1,
@@ -12,7 +12,8 @@ class Translator
               :output_row_3
 
   def initialize
-    @check_condition = "abcdefghijklmnopqrstuvwxyz".upcase
+    @check_uppercase = "abcdefghijklmnopqrstuvwxyz".upcase
+    @check_number_condition = "0123456789"
     @dictionary = Dictionary.load_dictionary
     @uppercase_row_1 = ".."
     @uppercase_row_2 = ".."
@@ -24,7 +25,7 @@ class Translator
   end
 
   def is_upper_case?(input)
-    if check_condition.include?(input)
+    if check_uppercase.include?(input)
       true
     else
       false
@@ -63,7 +64,17 @@ class Translator
     @output_row_3 = ""
   end
 
+  def final_output_reset
+    @final_output = ""
+  end
+
+  def total_reset
+    reset_output_rows
+    final_output_reset
+  end
+
   def to_braille_sentence(input)
+    total_reset
     input.split(//).each do |character|
       to_braille(character) if character != "\n"
       if output_row_3.length == 80

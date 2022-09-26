@@ -83,10 +83,6 @@ class ReverseTranslator < Translator
     conversion_loop(row_input_counter, character_input_counter)
   end
 
-  def final_output_reset
-    @final_output = ""
-  end
-
   def to_english(input)
     final_output_reset
     fill_lookup
