@@ -31,6 +31,8 @@ class Translator
     end
   end
 
+  #refactor above, remove all except check_condition.include?(input)
+
   def upper_case_braille(input)
     @output_row_1 += (uppercase_row_1 + dictionary.braille_characters[input.downcase].row_1.chomp)
     @output_row_2 += (uppercase_row_2 + dictionary.braille_characters[input.downcase].row_2.chomp)
@@ -64,7 +66,7 @@ class Translator
   def to_braille_sentence(input)
     input.split(//).each do |character|
       to_braille(character)
-      if output_row_3.length == 40
+      if output_row_3.length == 80
         update_output
         reset_output_rows
       end

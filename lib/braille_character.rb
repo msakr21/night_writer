@@ -13,5 +13,4 @@ class BrailleCharacter
     @capital_grid = "..\n..\n.0\n"
     @combined_grid = row_1 + row_2 + row_3
   end
-
 end

@@ -4,5 +4,3 @@ require './lib/dictionary'
 require './lib/translator'
 
 TerminalIO.night_writer
-
-

@@ -1,5 +1,8 @@
 require 'rspec'
 require './lib/terminal_i_o'
+require './lib/braille_character'
+require './lib/dictionary'
+require './lib/translator'
 
 RSpec.describe TerminalIO do
   let(:terminal_i_o) {TerminalIO.new}
@@ -23,19 +26,28 @@ RSpec.describe TerminalIO do
     expect(terminal_i_o.message).to eq("Bla")
   end
 
-  it "4. generates output to a file" do
-    allow(terminal_i_o).to receive(:output_file_name).and_return("braille.txt")
+  it "4. puts out a terminal message that says which file was created and how many characters are in it" do
+    allow(terminal_i_o).to receive(:output_file_name).and_return("dumdum.txt")
     allow(terminal_i_o).to receive(:message).and_return("Bla")
 
-    terminal_i_o.generate_output
-    expect(File.read("braille.txt")).to eq("Bla\n")
+    terminal_i_o.generate_braille_output
+    expect(terminal_i_o.terminal_message).to eq(puts "Created 'braille.txt' containing 3 characters")
   end
 
-  it "5. puts out a terminal message that says which file was created and how many characters are in it" do
+
+  it "5. generates braille output to a file from English input" do
     allow(terminal_i_o).to receive(:output_file_name).and_return("braille.txt")
     allow(terminal_i_o).to receive(:message).and_return("Bla")
 
-    terminal_i_o.generate_output
-    expect(terminal_i_o.terminal_message).to eq(puts "Created 'braille.txt' containing 3 characters")
+    terminal_i_o.generate_braille_output
+    expect(File.read("dumdum.txt")).to eq("..0.0.0.\n..0.0...\n.0..0...\n")
+  end
+
+  xit "6. generates English output to a file from braille input" do
+    allow(terminal_i_o).to receive(:output_file_name).and_return("english.txt")
+    allow(terminal_i_o).to receive(:message).and_return("..0.0.0.\n..0.0...\n.0..0...\n")
+
+    terminal_i_o.generate_english_output
+    expect(File.read("english.txt")).to eq("Bla")
   end
 end

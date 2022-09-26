@@ -13,11 +13,26 @@ class TerminalIO
 
   def self.night_writer
     terminal_i_o = new
-    terminal_i_o.generate_output
+    terminal_i_o.generate_braille_output
     terminal_i_o.terminal_message
   end
 
-  def generate_output
+  def self.night_reader
+    terminal_i_o = new
+    terminal_i_o.generate_english_output
+    terminal_i_o.terminal_message
+  end
+
+  def generate_english_output
+    output = File.new(output_file_name, 'w+')
+    output_content = translator.to_english_sentence(message)
+    output.puts(output_content)
+    output.close
+  end
+
+
+
+  def generate_braille_output
     output = File.new(output_file_name, 'w+')
     output_content = translator.to_braille_sentence(message)
     output.puts(output_content)
