@@ -7,7 +7,6 @@ class ReverseTranslator < Translator
               :uppercase_grid,
               :number_grid
 
-
   def initialize
     @braille_lookup = Hash.new(0)
     @collector = Hash.new(0)

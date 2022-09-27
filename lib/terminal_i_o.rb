@@ -14,7 +14,6 @@ class TerminalIO
   end
 
   def self.night_writer
-    # require 'pry';binding.pry
     terminal_i_o = new
     terminal_i_o.generate_braille_output
   end
