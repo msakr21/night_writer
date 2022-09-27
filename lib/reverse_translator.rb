@@ -1,35 +1,28 @@
 class ReverseTranslator < Translator
   attr_reader :braille_lookup,
-              # :input_row_1,
-              # :input_row_2,
-              # :input_row_3,
               :collector,
               :uppercase,
               :is_number,
-              :letter_to_number_lookup
+              :letter_to_number_lookup,
+              :uppercase_grid,
+              :number_grid
 
 
   def initialize
     @braille_lookup = Hash.new(0)
-    # @input_row_1 = ""
-    # @input_row_2 = ""
-    # @input_row_3 = ""
     @collector = Hash.new(0)
     @uppercase = false
     @is_number = false
+    @uppercase_grid = "..\n..\n.0\n"
+    @number_grid = ".0\n.0\n00\n"
     super
-    @letter_to_number_lookup = Hash.new(0)
+    @letter_to_number_lookup = dictionary.number_to_letter.invert
   end
 
   def fill_lookups
     dictionary.braille_characters.each do |letter, braille|
       braille_lookup[braille.combined_grid] = letter
     end
-    fill_letter_number_lookup
-  end
-
-  def fill_letter_number_lookup
-    @letter_to_number_lookup = dictionary.number_to_letter.invert
   end
 
   def collect_braille_rows(input)
@@ -49,11 +42,11 @@ class ReverseTranslator < Translator
   end
 
   def reverse_is_uppercase?(row_input, character_input)
-    input_row_update(row_input, character_input) == "..\n..\n.0\n"
+    input_row_update(row_input, character_input) == uppercase_grid
   end
 
   def reverse_is_number?(row_input, character_input)
-    input_row_update(row_input, character_input) == ".0\n.0\n00\n"
+    input_row_update(row_input, character_input) == number_grid
   end
 
   def toggle_uppercase
