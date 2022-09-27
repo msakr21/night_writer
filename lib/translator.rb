@@ -48,21 +48,29 @@ class Translator
   #refactor above, remove all except check_condition.include?(input)
 
   def upper_case_braille(input)
-    @output_row_1 += (uppercase_row_1 + dictionary.braille_characters[input.downcase].row_1.chomp)
-    @output_row_2 += (uppercase_row_2 + dictionary.braille_characters[input.downcase].row_2.chomp)
-    @output_row_3 += (uppercase_row_3 + dictionary.braille_characters[input.downcase].row_3.chomp)
+    @output_row_1 += uppercase_row_1 
+    @output_row_2 += uppercase_row_2 
+    @output_row_3 += uppercase_row_3 
+    line_width_control
+    @output_row_1 += dictionary.braille_characters[input.downcase].row_1.chomp
+    @output_row_2 += dictionary.braille_characters[input.downcase].row_2.chomp
+    @output_row_3 += dictionary.braille_characters[input.downcase].row_3.chomp
+    line_width_control
   end
 
   def regular_braille(input)
     @output_row_1 += dictionary.braille_characters[input].row_1.chomp
     @output_row_2 += dictionary.braille_characters[input].row_2.chomp
     @output_row_3 += dictionary.braille_characters[input].row_3.chomp
+    line_width_control
   end
 
   def braille_number(input)
-    @output_row_1 += (number_row_1 + dictionary.braille_characters[input].row_1.chomp)
-    @output_row_2 += (number_row_2 + dictionary.braille_characters[input].row_2.chomp)
-    @output_row_3 += (number_row_3 + dictionary.braille_characters[input].row_3.chomp)
+    @output_row_1 += number_row_1
+    @output_row_2 += number_row_2
+    @output_row_3 += number_row_3
+    line_width_control
+    regular_braille(input)
   end
 
   def to_braille(input)
@@ -94,14 +102,17 @@ class Translator
     final_output_reset
   end
 
+  def line_width_control
+    if output_row_3.length >= 80
+      update_output
+      reset_output_rows
+    end
+  end
+
   def to_braille_sentence(input)
     total_reset
     input.split(//).each do |character|
       to_braille(character) if character != "\n"
-      if output_row_3.length == 80
-        update_output
-        reset_output_rows
-      end
     end
     update_output if output_row_3 != ""
     final_output
