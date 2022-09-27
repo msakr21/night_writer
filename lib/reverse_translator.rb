@@ -4,7 +4,10 @@ class ReverseTranslator < Translator
               # :input_row_2,
               # :input_row_3,
               :collector,
-              :uppercase
+              :uppercase,
+              :is_number,
+              :letter_to_number_lookup
+
 
   def initialize
     @braille_lookup = Hash.new(0)
@@ -13,13 +16,20 @@ class ReverseTranslator < Translator
     # @input_row_3 = ""
     @collector = Hash.new(0)
     @uppercase = false
+    @is_number = false
+    @letter_to_number_lookup = Hash.new(0)
     super
   end
 
-  def fill_lookup
+  def fill_lookups
     dictionary.braille_characters.each do |letter, braille|
       braille_lookup[braille.combined_grid] = letter
     end
+    fill_letter_number_lookup
+  end
+
+  def fill_letter_number_lookup
+    @letter_to_number_lookup = dictionary.number_to_letter.invert
   end
 
   def collect_braille_rows(input)
@@ -42,10 +52,17 @@ class ReverseTranslator < Translator
     input_row_update(row_input, character_input) == "..\n..\n.0\n"
   end
 
+  def reverse_is_number?(row_input, character_input)
+    input_row_update(row_input, character_input) == ".0\n.0\n00\n"
+  end
+
   def toggle_uppercase
     @uppercase = !uppercase
   end
 
+  def toggle_number
+    @is_number = !is_number
+  end
 
   def single_braille_conversion(row_input, character_input)
       @final_output += braille_lookup[input_row_update(row_input, character_input)]
@@ -53,6 +70,10 @@ class ReverseTranslator < Translator
 
   def uppercase_braille_conversion(row_input, character_input)
     @final_output += braille_lookup[input_row_update(row_input, character_input)].upcase
+  end
+
+  def number_braille_conversion(row_input, character_input)
+    @final_output += letter_to_number_lookup[braille_lookup[input_row_update(row_input, character_input)]]
   end
 
   def uppercase_conversion_logic(row_input, character_input)
@@ -63,6 +84,15 @@ class ReverseTranslator < Translator
       toggle_uppercase
     else
       single_braille_conversion(row_input, character_input)
+    end
+  end
+
+  def number_conversion_logic(row_input, character_input)
+    if reverse_is_number?(row_input, character_input) == false && is_number == true
+      number_braille_conversion(row_input, character_input)
+      toggle_number
+    elsif reverse_is_number?(row_input, character_input)
+      toggle_number
     end
   end
 
