@@ -6,11 +6,11 @@ class Dictionary
               :number_to_letter
 
   def initialize
-    @braille_characters = Hash.new(0)
+    @braille_characters = Hash.new("")
     @row_1 = {group_1: "abehkloruvz", group_2: "cdfgmnpqxy", group_3: "ijstw", group_4: ",;:.!?'-"}
     @row_2 = {group_1: "ackmux'-", group_2: "bfilpsv,;?", group_3: "denozy", group_4: "ghjqrtw:.!"}
     @row_3 = {group_1: "abcdefghij,:", group_2: "klmnopqrst;!'", group_3: "uvxyz?-", group_4: "w."}
-    @number_to_letter = Hash.new(0)
+    @number_to_letter = Hash.new("")
   end
 
   def add_character(character, row_1, row_2, row_3)
