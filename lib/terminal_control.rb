@@ -1,4 +1,4 @@
-class TerminalIO
+class TerminalControl
   attr_reader :message,
               :file_name,
               :output_file_name,
@@ -14,13 +14,13 @@ class TerminalIO
   end
 
   def self.night_writer
-    terminal_i_o = new
-    terminal_i_o.generate_braille_output
+    terminal_control = new
+    terminal_control.generate_braille_output
   end
 
   def self.night_reader
-    terminal_i_o = new
-    terminal_i_o.generate_english_output
+    terminal_control = new
+    terminal_control.generate_english_output
   end
 
   def generate_english_output

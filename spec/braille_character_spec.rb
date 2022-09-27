@@ -21,5 +21,4 @@ RSpec.describe BrailleCharacter do
   it "4. has a combined grid readable attribute" do
     expect(a.combined_grid).to eq("O.\n..\n..\n")
   end
-  
 end
