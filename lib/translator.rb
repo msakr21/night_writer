@@ -7,10 +7,11 @@ class Translator
               :final_output,
               :output_row_1,
               :output_row_2,
-              :output_row_3
+              :output_row_3,
               :number_row_1,
               :number_row_2,
-              :number_row_3
+              :number_row_3,
+              :check_numbers
 
   def initialize
     @check_uppercase = "abcdefghijklmnopqrstuvwxyz".upcase
