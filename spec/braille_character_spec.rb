@@ -14,11 +14,7 @@ RSpec.describe BrailleCharacter do
     expect(a.row_3).to eq("..\n")
   end
 
-  it "3. has a grid for upper case letter" do
-    expect(a.capital_grid).to eq("..\n..\n.O\n")
-  end
-
-  it "4. has a combined grid readable attribute" do
+  it "3. has a combined grid readable attribute" do
     expect(a.combined_grid).to eq("O.\n..\n..\n")
   end
 end

@@ -10,9 +10,16 @@ RSpec.describe Translator do
     expect(translator).to be_a(Translator)
   end
 
+  it "2. has readable attributes "
+
   it "2. has a method check_upper_case that determines if input is capitalized or not" do
     expect(translator.is_uppercase?("a")).to eq(false)
     expect(translator.is_uppercase?("A")).to eq(true)
+  end
+
+  it "2. has a method check_upper_case that determines if input is number or not" do
+    expect(translator.is_number?("a")).to eq(false)
+    expect(translator.is_number?("1")).to eq(true)
   end
 
   it "3. converts letters to their braille equivalent" do
