@@ -18,7 +18,7 @@ class ReverseTranslator < Translator
     @letter_to_number_lookup = dictionary.number_to_letter.invert
   end
 
-  def fill_lookups
+  def fill_braille_lookup
     dictionary.braille_characters.each do |letter, braille|
       braille_lookup[braille.combined_grid] = letter
     end
@@ -33,19 +33,19 @@ class ReverseTranslator < Translator
     end
   end
 
-  def input_row_update(row_input, character_input)
+  def input_character_collect(row_input, character_input)
       row_1 = collector.values[row_input][character_input] + "\n"
       row_2 = collector.values[(row_input + 1)][character_input] + "\n"
       row_3 = collector.values[(row_input + 2)][character_input] + "\n"
       (row_1 + row_2 + row_3)
   end
 
-  def reverse_is_uppercase?(row_input, character_input)
-    input_row_update(row_input, character_input) == uppercase_grid
+  def braille_is_uppercase?(row_input, character_input)
+    input_character_collect(row_input, character_input) == uppercase_grid
   end
 
-  def reverse_is_number?(row_input, character_input)
-    input_row_update(row_input, character_input) == number_grid
+  def braille_is_number?(row_input, character_input)
+    input_character_collect(row_input, character_input) == number_grid
   end
 
   def toggle_uppercase
@@ -57,39 +57,39 @@ class ReverseTranslator < Translator
   end
 
   def single_braille_conversion(row_input, character_input)
-      @final_output += braille_lookup[input_row_update(row_input, character_input)]
+      @final_output += braille_lookup[input_character_collect(row_input, character_input)]
   end
 
   def uppercase_braille_conversion(row_input, character_input)
-    @final_output += braille_lookup[input_row_update(row_input, character_input)].upcase
+    @final_output += braille_lookup[input_character_collect(row_input, character_input)].upcase
   end
 
   def number_braille_conversion(row_input, character_input)
-    @final_output += letter_to_number_lookup[braille_lookup[input_row_update(row_input, character_input)]]
+    @final_output += letter_to_number_lookup[braille_lookup[input_character_collect(row_input, character_input)]]
   end
 
   def uppercase_conversion_logic(row_input, character_input)
-    if reverse_is_uppercase?(row_input, character_input) == false && uppercase == true
+    if braille_is_uppercase?(row_input, character_input) == false && uppercase == true
       uppercase_braille_conversion(row_input, character_input)
       toggle_uppercase
-    elsif reverse_is_uppercase?(row_input, character_input)
+    elsif braille_is_uppercase?(row_input, character_input)
       toggle_uppercase
     end
   end
 
   def number_conversion_logic(row_input, character_input)
-    if reverse_is_number?(row_input, character_input) == false && is_number == true
+    if braille_is_number?(row_input, character_input) == false && is_number == true
       number_braille_conversion(row_input, character_input)
       toggle_number
-    elsif reverse_is_number?(row_input, character_input)
+    elsif braille_is_number?(row_input, character_input)
       toggle_number
     end
   end
 
   def combined_conversion_logic(row_input, character_input)
-    if reverse_is_number?(row_input, character_input) == true || is_number == true
+    if braille_is_number?(row_input, character_input) == true || is_number == true
       number_conversion_logic(row_input, character_input)
-    elsif reverse_is_uppercase?(row_input, character_input) == true || uppercase == true
+    elsif braille_is_uppercase?(row_input, character_input) == true || uppercase == true
       uppercase_conversion_logic(row_input, character_input)
     else
       single_braille_conversion(row_input, character_input)
@@ -115,7 +115,7 @@ class ReverseTranslator < Translator
 
   def to_english(input)
     final_output_reset
-    fill_lookups
+    fill_braille_lookup
     collect_braille_rows(input)
     multi_braille_conversion
     final_output
