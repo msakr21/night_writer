@@ -17,8 +17,8 @@ class ReverseTranslator < Translator
     @collector = Hash.new(0)
     @uppercase = false
     @is_number = false
-    @letter_to_number_lookup = Hash.new(0)
     super
+    @letter_to_number_lookup = Hash.new(0)
   end
 
   def fill_lookups
@@ -82,8 +82,6 @@ class ReverseTranslator < Translator
       toggle_uppercase
     elsif reverse_is_uppercase?(row_input, character_input)
       toggle_uppercase
-    else
-      single_braille_conversion(row_input, character_input)
     end
   end
 
@@ -96,9 +94,19 @@ class ReverseTranslator < Translator
     end
   end
 
+  def combined_conversion_logic(row_input, character_input)
+    if reverse_is_number?(row_input, character_input) == true || is_number == true
+      number_conversion_logic(row_input, character_input)
+    elsif reverse_is_uppercase?(row_input, character_input) == true || uppercase == true
+      uppercase_conversion_logic(row_input, character_input)
+    else
+      single_braille_conversion(row_input, character_input)
+    end
+  end
+
   def conversion_loop(row_input, character_input)
     until row_input >= collector.values.length do
-      uppercase_conversion_logic(row_input, character_input)
+      combined_conversion_logic(row_input, character_input)
       character_input += 1
       if character_input >= 40 or character_input == collector.values[row_input].length
         row_input += 3
@@ -115,7 +123,7 @@ class ReverseTranslator < Translator
 
   def to_english(input)
     final_output_reset
-    fill_lookup
+    fill_lookups
     collect_braille_rows(input)
     multi_braille_conversion
     final_output
