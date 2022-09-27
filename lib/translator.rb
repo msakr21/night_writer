@@ -30,23 +30,13 @@ class Translator
   end
 
   def is_uppercase?(input)
-    if check_uppercase.include?(input)
-      true
-    else
-      false
-    end
+    check_uppercase.include?(input)
   end
 
   def is_number?(input)
-    if check_numbers.include?(input)
-      true
-    else
-      false
-    end
+    check_numbers.include?(input)
   end
-
-  #refactor above, remove all except check_condition.include?(input)
-
+  
   def upper_case_braille(input)
     @output_row_1 += uppercase_row_1 
     @output_row_2 += uppercase_row_2 

@@ -1,8 +1,8 @@
-require './lib/terminal_i_o'
+require './lib/terminal_control'
 require './lib/braille_character'
 require './lib/dictionary'
 require './lib/translator'
 require './lib/reverse_translator'
 
 
-TerminalIO.night_reader
+TerminalControl.night_reader

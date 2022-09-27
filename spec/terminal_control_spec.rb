@@ -1,5 +1,5 @@
 require 'rspec'
-require './lib/terminal_i_o'
+require './lib/terminal_control'
 require './lib/braille_character'
 require './lib/dictionary'
 require './lib/translator'
