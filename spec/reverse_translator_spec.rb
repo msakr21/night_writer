@@ -51,7 +51,7 @@ RSpec.describe Translator do
   it "7. fill reverse_lookup with braille characters as keys and their letters as values" do
     expect(reverse_translator.braille_lookup).to eq({})
     reverse_translator.fill_braille_lookup
-    expect(reverse_translator.braille_lookup.length).to eq(27)
+    expect(reverse_translator.braille_lookup.length).to eq(35)
     expect(reverse_translator.braille_lookup["0.\n..\n..\n"]).to eq("a")
   end
 
