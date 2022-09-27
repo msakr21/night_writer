@@ -10,24 +10,23 @@ RSpec.describe Translator do
     expect(translator).to be_a(Translator)
   end
 
-  it "2. has attribute upper_case that is false by default" do
-    expect(translator.upper_case).to eq(false)
+  it "2. has a method check_upper_case that determines if input is capitalized or not" do
+    expect(translator.is_uppercase?("a")).to eq(false)
+    expect(translator.is_uppercase?("A")).to eq(true)
   end
 
-  it "3. has a method check_upper_case that determines if input is capitalized or not" do
-    expect(translator.is_upper_case?("a")).to eq(false)
-    expect(translator.is_upper_case?("A")).to eq(true)
+  it "3. converts letters to their braille equivalent" do
+    expect(translator.to_braille_sentence("b")).to eq("0.\n0.\n..\n")
+    expect(translator.to_braille_sentence("c")).to eq("00\n..\n..\n")
   end
 
-  it "4. has a method 'toggle_upper_case' that toggles the upper_case attribute if input is upper case" do
-    translator.toggle_upper_case("a")
-    expect(translator.upper_case).to eq(false)
-    translator.toggle_upper_case("A")
-    expect(translator.upper_case).to eq(true)
+  it "4. is case sensitive in its conversion" do
+    expect(translator.to_braille_sentence("a")).to eq("0.\n..\n..\n")
+    expect(translator.to_braille_sentence("A")).to eq("..0.\n....\n.0..\n")
   end
 
-  it "5. converts letters to their braille equivalent" do
-    expect(translator.to_braille("a")).to eq("0.\n..\n..\n")
-    expect(translator.to_braille("A")).to eq("..0.\n....\n.0..\n")
+  it "5. can support number strings as well" do
+    expect(translator.to_braille_sentence("1")).to eq(".00.\n.0..\n00..\n")
+    expect(translator.to_braille_sentence("2")).to eq(".00.\n.00.\n00..\n")
   end
 end

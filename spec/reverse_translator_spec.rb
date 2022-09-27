@@ -29,7 +29,7 @@ RSpec.describe Translator do
 
   it "5. fill reverse_lookup with braille characters as keys and their letters as values" do
     expect(reverse_translator.braille_lookup).to eq({})
-    reverse_translator.fill_lookup
+    reverse_translator.fill_lookups
     # require 'pry';binding.pry
     expect(reverse_translator.braille_lookup.length).to eq(27)
     expect(reverse_translator.braille_lookup["0.\n..\n..\n"]).to eq("a")
@@ -39,6 +39,17 @@ RSpec.describe Translator do
     expect(reverse_translator.to_english("0.\n..\n..\n")).to eq("a")
     expect(reverse_translator.to_english("0.0.0000\n..0....0\n........\n")).to eq("abcd")
     expect(reverse_translator.to_english("..0...0.\n......0.\n.0...0..\n")).to eq("AB")
+    # expect(reverse_translator.to_english("..0...0.\n......0.\n.0...0..\n")).to eq("AB")
   end
 
+  it "7. converts braille to their number equivalent" do
+    expect(reverse_translator.to_english("0.\n..\n..\n")).to eq("a")
+    expect(reverse_translator.to_english("0.0.0000\n..0....0\n........\n")).to eq("abcd")
+    expect(reverse_translator.to_english(".00.\n.0..\n00..\n")).to eq("1")
+    expect(reverse_translator.to_english(".00.\n.0..\n00..\n.000\n.0..\n00..\n.00.\n.00.\n00..\n.000\n.0.0\n00..\n")).to eq("1324")
+  end
+
+  it "8. converts braille to a combination of letters and numbers" do
+    expect(reverse_translator.to_english("0..000..0.\n...0.0..0.\n..00...0..\n")).to eq("a4B")
+  end
 end
