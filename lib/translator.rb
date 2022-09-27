@@ -58,7 +58,7 @@ class Translator
     @output_row_3 += dictionary.braille_characters[input].row_3.chomp
   end
 
-  def number_braille(input)
+  def braille_number(input)
     @output_row_1 += (number_row_1 + dictionary.braille_characters[input].row_1.chomp)
     @output_row_2 += (number_row_2 + dictionary.braille_characters[input].row_2.chomp)
     @output_row_3 += (number_row_3 + dictionary.braille_characters[input].row_3.chomp)
@@ -68,7 +68,7 @@ class Translator
       if is_uppercase?(input)
         upper_case_braille(input)
       elsif is_number?(input)
-        number_braille(input)
+        braille_number(dictionary.number_to_letter[input])
       else
         regular_braille(input)
       end
